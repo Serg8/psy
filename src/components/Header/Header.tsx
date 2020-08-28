@@ -1,9 +1,9 @@
 import React from 'react';
-import s from './Header.module.scss'
+import classes from './Header.module.scss'
 
 function Header() {
     return (
-        <header className={s.header}>
+        <header className={classes.header}>
             <div>logo</div>
             <nav>
                 <ul>
