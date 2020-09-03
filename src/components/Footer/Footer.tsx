@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Footer.module.scss';
 
-function Footer() {
+const Footer = () => {
     return (
         <footer className={classes.footer}>
             FOOTER
