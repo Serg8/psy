@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './Header.module.scss'
 
 const Header = () => {
@@ -10,7 +10,15 @@ const Header = () => {
 
     // деструктурированное присваивание
     let [editMode, setEditMode] = useState(false);
-    //let [status, setStatus] = useState(props.status);  // если нужно, то добавляем ещё один стэйт
+    let [status, setStatus] = useState("start");  // если нужно, то добавляем ещё один стэйт
+    // получаем два разных состояния, которые меняются независимо друг от друга
+
+    useEffect( () => {
+        //setStatus(props.status);
+    }, [] );  // [] -  реакт, запускай useEffect не всегда, а только тогда, когда компонента вмонтировалась первый раз
+    // вообще не правильно закидывать пустой массив в useEffect, нужно чтобы он срабатывал, когда ещё приходят пропсы
+    // указываем в массивые зависимость от props.status те. [props.status],
+    // таким образом, елси при очередной перерисовки, props.status будет другим, то запустится useEffect
 
     const activateEditMode = () => {
         setEditMode(true); // setEditMode - это второе значение, которым является функция
@@ -18,6 +26,10 @@ const Header = () => {
 
     const deactivateEditMode = () => {
         setEditMode(false);
+    }
+
+    const onStatusChange = (e: any) => {
+        setStatus(e.currentTarget.value);
     }
 
     // методов жизненного цикла в хуках нет
@@ -33,11 +45,11 @@ const Header = () => {
             <div>
                 {
                     !editMode &&
-                    <div><span onDoubleClick={ activateEditMode } >botton</span></div>
+                    <div><span onDoubleClick={ activateEditMode } >botton</span> <div>status: {status}</div></div>
                 }
                 {
                     editMode &&
-                    <div><input autoFocus={true} onBlur={ deactivateEditMode } /></div>
+                    <div><input onChange={onStatusChange} autoFocus={true} onBlur={ deactivateEditMode } value={status} /></div>
                 }
             </div>
         </header>
